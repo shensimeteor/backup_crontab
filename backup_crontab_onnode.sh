@@ -18,6 +18,8 @@ if [ $? -eq 0 ]; then
     cron_diff=$(diff $cron_latest crontab.temp)
     if [ -n "$cron_diff" ]; then
         mv crontab.temp crontab.$date
+    else
+        rm -rf crontab.temp
     fi
 else
     mv crontab.temp crontab.$date

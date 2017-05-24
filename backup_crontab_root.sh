@@ -17,8 +17,11 @@ function mydir(){
 thisdir=$(mydir $(pwd) $0)
 cd $thisdir
 
-$dir_save=$thisdir/saves/
-for an in $(cat $this_dir/account_nodes); do
-    test -d $this_dir/saves/$an || mkdir -p $this_dir/saves/$an
-    ssh $an "$this_dir/backup_crontab_onnode.sh $dir_save/$an/"
+dir_save=$thisdir/saves/
+for an in $(cat $thisdir/account_nodes); do
+    if [[ $an == "#*" ]] || [ -z "$an" ] ; then
+        continue
+    fi
+    test -d $thisdir/saves/$an || mkdir -p $thisdir/saves/$an
+    echo ssh $an "$thisdir/backup_crontab_onnode.sh $dir_save/$an/"
 done
